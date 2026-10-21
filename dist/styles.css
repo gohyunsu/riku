@@ -8,3 +8,12 @@
 @media(min-width:761px){.site-header:not(.scrolled){background:rgba(248,247,239,.68);backdrop-filter:blur(9px)}}
 @media(max-width:760px){.hero-left{height:44%}.hero-image{height:56%}.hero-title-wrap{bottom:51%}.hero-left-bottom{display:none}.hero-image-label{top:auto;bottom:18px;left:5vw;right:auto;transform:rotate(-3deg)}.hero-scroll{bottom:22px}.hero-image-sticker{bottom:22%}}
 .person-name span{display:none}@media(max-width:760px){.person-name span{display:block;letter-spacing:.04em}}
+
+.motto-card{position:relative;max-width:680px;margin:48px 8px 22px 0;padding:24px 28px 26px;background:var(--pink);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--blue);transform:rotate(-1deg)}
+.motto-card figcaption{display:flex;justify-content:space-between;gap:14px;font-size:.58rem;font-weight:800;letter-spacing:.11em}
+.motto-card figcaption span:first-child{color:var(--blue)}
+.motto-card blockquote{margin:32px 0 13px;font:800 clamp(2rem,3.1vw,3.6rem)/1.18 var(--body);letter-spacing:-.075em;word-break:keep-all}
+.motto-card blockquote span{color:var(--blue);white-space:nowrap;font-family:var(--display);font-style:italic;letter-spacing:-.08em}
+.story-main .motto-translation{font-size:1rem;font-weight:800;line-height:1.35;margin:0 0 22px}
+.story-main .motto-meaning{max-width:none;padding-top:13px;margin:0;border-top:1px solid var(--ink);font-size:.78rem;font-weight:600;line-height:1.45;letter-spacing:0}
+@media(max-width:760px){.motto-card{margin:42px 8px 20px 0;padding:19px 18px 22px;box-shadow:6px 6px 0 var(--blue)}.motto-card figcaption{flex-wrap:wrap;font-size:.52rem}.motto-card blockquote{margin-top:28px;font-size:clamp(1.95rem,8.1vw,3rem)}.story-main .motto-translation{font-size:.9rem}}
