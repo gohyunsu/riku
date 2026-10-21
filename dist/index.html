@@ -35,6 +35,7 @@
       </nav>
       <a class="header-cta" href="#projects">Explore work <span aria-hidden="true">↗</span></a>
       <button class="menu-button" type="button" aria-label="Open menu" aria-controls="mobile-nav" aria-expanded="false"><span></span><span></span></button>
+      <div class="site-progress" aria-hidden="true"><span></span></div>
     </header>
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
       <a href="#about">About</a><a href="#research">Research</a><a href="#projects">Projects</a><a href="#people">People</a><a href="#publications">Publications</a><a href="#story">Our story</a>
@@ -85,9 +86,9 @@
         <div class="section-topline light"><span>02 / WHAT WE EXPLORE</span><span>LOOK CLOSER, THINK WIDER ✳</span></div>
         <div class="research-heading"><div><span class="eyebrow lime">OUR RESEARCH UNIVERSE</span><h2 id="research-title">Vision is our<br /><i>starting point.</i></h2></div><p>We read visual information, connect it with context, and explore where it can make a difference. These are the directions we are curious about.</p></div>
         <div class="research-cards">
-          <article class="research-card"><div class="card-top"><span>01 / PERCEPTION</span><span>↗</span></div><div class="research-glyph" aria-hidden="true"><span class="eye-shape"><span></span></span></div><div class="card-bottom"><h3>See the signal.</h3><p>How can models find meaningful patterns in images and video, even when the world gets messy?</p><span class="card-tag">VISUAL REPRESENTATION</span></div></article>
-          <article class="research-card"><div class="card-top"><span>02 / CONNECTION</span><span>↗</span></div><div class="research-glyph orbit-glyph" aria-hidden="true"><span>✳</span></div><div class="card-bottom"><h3>Connect the dots.</h3><p>What can vision, language, and context teach one another when they meet?</p><span class="card-tag">MULTIMODAL UNDERSTANDING</span></div></article>
-          <article class="research-card"><div class="card-top"><span>03 / APPLICATION</span><span>↗</span></div><div class="research-glyph grid-glyph" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div><div class="card-bottom"><h3>Make it matter.</h3><p>Where can visual understanding help people solve real problems across fields?</p><span class="card-tag">CROSS-DOMAIN VISION</span></div></article>
+          <article class="research-card"><div class="card-top"><span>01 / PERCEPTION</span><span aria-hidden="true">✧</span></div><div class="research-glyph" aria-hidden="true"><span class="eye-shape"><span></span></span></div><div class="card-bottom"><h3>See the signal.</h3><p>How can models find meaningful patterns in images and video, even when the world gets messy?</p><span class="card-tag">VISUAL REPRESENTATION</span></div></article>
+          <article class="research-card"><div class="card-top"><span>02 / CONNECTION</span><span aria-hidden="true">✳</span></div><div class="research-glyph orbit-glyph" aria-hidden="true"><span>✳</span></div><div class="card-bottom"><h3>Connect the dots.</h3><p>What can vision, language, and context teach one another when they meet?</p><span class="card-tag">MULTIMODAL UNDERSTANDING</span></div></article>
+          <article class="research-card"><div class="card-top"><span>03 / APPLICATION</span><span aria-hidden="true">✦</span></div><div class="research-glyph grid-glyph" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div><div class="card-bottom"><h3>Make it matter.</h3><p>Where can visual understanding help people solve real problems across fields?</p><span class="card-tag">CROSS-DOMAIN VISION</span></div></article>
         </div>
       </section>
 
@@ -125,11 +126,12 @@
         </article>
         <p class="surface-credit">IMAGERY CREDIT / SurfaceTrace animations derived from <a href="https://www.vicos.si/resources/kolektorsdd/" target="_blank" rel="noopener noreferrer">KolektorSDD · ViCoS Lab / Kolektor Group</a> photos and model intermediates. See <a href="https://doi.org/10.1007/s10845-019-01476-x" target="_blank" rel="noopener noreferrer">Tabernik et al. (2019)</a>. Dataset-derived media: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>.</p>
         <div class="project-questions-label"><span>QUESTIONS BEHIND THE WORK</span><span>001—003 / KEEP EXPLORING ✦</span></div>
-        <div class="project-board">
-          <article class="project-card project-lime"><div class="project-card-meta"><span>QUESTION 001</span><span class="asterisk">✳</span></div><h3>How do machines<br />really <i>see?</i></h3><p>What do visual representations capture—and what do they miss?</p><span class="project-state">EXPLORATION NOTE <b>↗</b></span></article>
-          <article class="project-card project-blue"><div class="project-card-meta"><span>QUESTION 002</span><span class="asterisk">✦</span></div><h3>What happens<br />when worlds <i>meet?</i></h3><p>What changes when images, language, and domain knowledge come together?</p><span class="project-state">EXPLORATION NOTE <b>↗</b></span></article>
-          <article class="project-card project-pink"><div class="project-card-meta"><span>QUESTION 003</span><span class="asterisk">♡</span></div><h3>Can vision make<br />a <i>difference?</i></h3><p>What would it take to make vision useful in the real world?</p><span class="project-state">EXPLORATION NOTE <b>↗</b></span></article>
+        <div class="project-board" role="region" aria-label="Questions behind the work">
+          <article class="project-card project-lime"><div class="project-card-meta"><span>QUESTION 001</span><span class="asterisk">✳</span></div><h3>How do machines<br />really <i>see?</i></h3><p>What do visual representations capture—and what do they miss?</p><span class="project-state">OPEN QUESTION <b>✳</b></span></article>
+          <article class="project-card project-blue"><div class="project-card-meta"><span>QUESTION 002</span><span class="asterisk">✦</span></div><h3>What happens<br />when worlds <i>meet?</i></h3><p>What changes when images, language, and domain knowledge come together?</p><span class="project-state">OPEN QUESTION <b>✦</b></span></article>
+          <article class="project-card project-pink"><div class="project-card-meta"><span>QUESTION 003</span><span class="asterisk">♡</span></div><h3>Can vision make<br />a <i>difference?</i></h3><p>What would it take to make vision useful in the real world?</p><span class="project-state">OPEN QUESTION <b>♡</b></span></article>
         </div>
+        <div class="question-controls" aria-label="Browse questions"><button type="button" data-question-prev aria-label="Previous question" disabled>←</button><span data-question-count aria-live="polite">01 / 03</span><button type="button" data-question-next aria-label="Next question">→</button></div>
         <div class="projects-note"><span>✱</span> FIRST LOOK, NOT THE FINAL FRAME. <span>Our project notes will keep growing.</span></div>
       </section>
 

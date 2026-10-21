@@ -156,3 +156,39 @@ a.person-profile-arrow:hover{color:var(--blue);transform:translate(2px,-2px)}
 @media(max-width:760px){.hero-scroll{font-size:0;gap:0}.hero-scroll span{font-size:1.5rem}}
 section[id]{scroll-margin-top:82px}
 @media(max-width:760px){section[id]{scroll-margin-top:68px}}
+
+/* Reading position and current section stay visible as visitors move through the page. */
+.site-progress{position:absolute;left:0;right:0;bottom:-2px;height:3px;overflow:hidden;pointer-events:none}
+.site-progress span{display:block;width:100%;height:100%;background:var(--blue);transform:scaleX(0);transform-origin:left center}
+.desktop-nav a[aria-current="location"]:after{width:100%;height:3px;background:var(--blue)}
+.mobile-nav a[aria-current="location"]{padding-left:12px;border-left:5px solid var(--blue)}
+
+/* The question cards become a compact, swipeable chapter on small screens. */
+.question-controls{display:none}
+@media(max-width:760px){
+  .project-board{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:4px;overscroll-behavior-inline:contain;padding:5px 64px 18px 4px;scrollbar-width:none}
+  .project-board::-webkit-scrollbar{display:none}
+  .project-card{flex:0 0 calc(100vw - 110px);scroll-snap-align:start;min-height:355px}
+  .question-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin:14px 0 6px;font:.7rem/1 var(--display);font-weight:800;letter-spacing:.13em}
+  .question-controls button{width:39px;height:39px;border:1.5px solid var(--ink);border-radius:50%;background:var(--paper);box-shadow:2px 2px 0 var(--ink);font-size:1.2rem;cursor:pointer;transition:transform .2s,background .2s}
+  .question-controls button:not(:disabled):hover{transform:translateY(-2px);background:var(--lime)}
+  .question-controls button:disabled{opacity:.42;cursor:default;box-shadow:none}
+}
+
+/* Quiet motion and hover responses make the printed collage feel tactile. */
+.research-card.reveal.in-view:hover{transform:translateY(-7px)}
+.project-card.reveal.in-view:hover{transform:translate(-3px,-3px) rotate(-1deg)}
+.person:focus-within{background:var(--lime);padding:0 18px}
+.paper-card{transition:opacity .7s,transform .35s,box-shadow .25s}
+.paper-card:hover{transform:translate(-2px,-3px);box-shadow:9px 10px 0 var(--ink)}
+.story-sticker,.motto-card{transition:transform .35s,box-shadow .35s}
+.story-sticker:hover{transform:rotate(-7deg) scale(1.035);box-shadow:14px 14px 0 var(--blue)}
+.motto-card:hover{transform:rotate(0deg) translateY(-3px);box-shadow:10px 12px 0 var(--blue)}
+.eye-shape,.orbit-glyph span,.grid-glyph span{transition:transform .45s ease}
+.orbit-glyph span,.grid-glyph span{display:inline-block}
+.research-card:hover .eye-shape{transform:rotate(45deg) scale(1.08)}
+.research-card:hover .orbit-glyph span{transform:rotate(22deg) scale(1.08)}
+.research-card:hover .grid-glyph span:nth-child(odd){transform:scale(1.18) rotate(12deg)}
+@media(prefers-reduced-motion:no-preference){.orbital{animation:orbitalDrift 34s linear infinite}}
+@keyframes orbitalDrift{from{transform:rotate(-20deg)}to{transform:rotate(340deg)}}
+@media(prefers-reduced-motion:reduce){.paper-card,.story-sticker,.motto-card,.eye-shape,.orbit-glyph span,.grid-glyph span{transition:none}}

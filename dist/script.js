@@ -18,13 +18,42 @@ menuButton.addEventListener('click', () => {
 
 mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') closeMenu();
+  if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+    closeMenu();
+    menuButton.focus();
+  }
 });
 
 const header = document.querySelector('.site-header');
-const updateHeader = () => header.classList.toggle('scrolled', window.scrollY > 24);
-window.addEventListener('scroll', updateHeader, { passive: true });
-updateHeader();
+const progressFill = document.querySelector('.site-progress span');
+const trackedSections = [...document.querySelectorAll('main > section[id]:not(#top)')];
+const sectionLinks = [...document.querySelectorAll('.desktop-nav a, .mobile-nav a')];
+let scrollUpdatePending = false;
+
+function updatePagePosition() {
+  scrollUpdatePending = false;
+  header.classList.toggle('scrolled', window.scrollY > 24);
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+  progressFill.style.transform = `scaleX(${progress})`;
+
+  const marker = window.scrollY + header.offsetHeight + window.innerHeight * 0.28;
+  const current = [...trackedSections].reverse().find(section => section.offsetTop <= marker)?.id;
+  sectionLinks.forEach(link => {
+    if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
+
+function schedulePagePositionUpdate() {
+  if (scrollUpdatePending) return;
+  scrollUpdatePending = true;
+  requestAnimationFrame(updatePagePosition);
+}
+
+window.addEventListener('scroll', schedulePagePositionUpdate, { passive: true });
+window.addEventListener('resize', schedulePagePositionUpdate, { passive: true });
+updatePagePosition();
 
 if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const observer = new IntersectionObserver(entries => {
@@ -35,10 +64,49 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
       }
     });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.intro-main, .research-card, .project-card, .person, .pub-card, .story-main').forEach(element => {
+  document.querySelectorAll('.intro-main, .research-card, .featured-project, .project-card, .person, .paper-card, .story-main').forEach(element => {
     element.classList.add('reveal');
     observer.observe(element);
   });
+}
+
+const questionBoard = document.querySelector('.project-board');
+if (questionBoard) {
+  const cards = [...questionBoard.querySelectorAll('.project-card')];
+  const previous = document.querySelector('[data-question-prev]');
+  const next = document.querySelector('[data-question-next]');
+  const count = document.querySelector('[data-question-count]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let activeIndex = 0;
+  let questionUpdatePending = false;
+
+  function updateQuestionControls() {
+    questionUpdatePending = false;
+    const boardLeft = questionBoard.getBoundingClientRect().left;
+    activeIndex = cards.reduce((nearest, card, index) =>
+      Math.abs(card.getBoundingClientRect().left - boardLeft) < Math.abs(cards[nearest].getBoundingClientRect().left - boardLeft) ? index : nearest, 0);
+    count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+    previous.disabled = activeIndex === 0;
+    next.disabled = activeIndex === cards.length - 1;
+  }
+
+  function scheduleQuestionUpdate() {
+    if (questionUpdatePending) return;
+    questionUpdatePending = true;
+    requestAnimationFrame(updateQuestionControls);
+  }
+
+  function showQuestion(index) {
+    const card = cards[Math.max(0, Math.min(cards.length - 1, index))];
+    const left = card.getBoundingClientRect().left - questionBoard.getBoundingClientRect().left + questionBoard.scrollLeft;
+    questionBoard.scrollTo({ left, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+  }
+
+  previous.addEventListener('click', () => showQuestion(activeIndex - 1));
+  next.addEventListener('click', () => showQuestion(activeIndex + 1));
+  questionBoard.addEventListener('scroll', scheduleQuestionUpdate, { passive: true });
+  window.addEventListener('resize', scheduleQuestionUpdate, { passive: true });
+  updateQuestionControls();
 }
 
 const methodBook = document.querySelector('[data-method-book]');

@@ -4,6 +4,8 @@
 
 The site is a buildless static project in `dist/`. Open `dist/index.html` through a local HTTP server to preview it. Content and layout live in `dist/index.html` and `dist/styles.css`; interactions live in `dist/script.js`.
 
+The interface tracks the current section in the navigation, shows reading progress in the header, and lets small-screen visitors swipe or use arrows to browse the three research questions. The mobile menu supports Escape, and motion effects respect reduced-motion settings.
+
 ## Content status
 
 - Team roster and affiliations supplied by the team: Hyunsu Go (team lead, Seoul National University), Dohyeon Kwon (Kyung Hee University), Jinyong Jun (Seoul National University), and Jihyeon Lee (Chung-Ang University). Hyunsu and Jinyong's personal websites are linked from their names.
