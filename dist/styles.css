@@ -193,6 +193,16 @@ section[id]{scroll-margin-top:82px}
 .research-card:hover .eye-shape{transform:rotate(45deg) scale(1.08)}
 .research-card:hover .orbit-glyph span{transform:rotate(22deg) scale(1.08)}
 .research-card:hover .grid-glyph span:nth-child(odd){transform:scale(1.18) rotate(12deg)}
-@media(prefers-reduced-motion:no-preference){.orbital{animation:orbitalDrift 34s linear infinite}}
-@keyframes orbitalDrift{from{transform:rotate(-20deg)}to{transform:rotate(340deg)}}
+/* Keep the central ring steady while the two orbital paths and star move independently. */
+@media(max-width:760px){
+  .intro-side .orbital:before{inset:18px -16px}
+  .intro-side .orbital:after{inset:-8px 42px}
+}
+@media(prefers-reduced-motion:no-preference){
+  .orbital:before{animation:orbitRing 27s linear infinite}
+  .orbital:after{animation:orbitRing 41s linear infinite reverse}
+  .orbital>span{animation:orbitStar 17s linear infinite}
+}
+@keyframes orbitRing{from{transform:rotate(60deg)}to{transform:rotate(420deg)}}
+@keyframes orbitStar{0%,100%{transform:rotate(0deg) scale(1)}50%{transform:rotate(-180deg) scale(1.08)}}
 @media(prefers-reduced-motion:reduce){.paper-card,.story-sticker,.motto-card,.eye-shape,.orbit-glyph span,.grid-glyph span{transition:none}}
