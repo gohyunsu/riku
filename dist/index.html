@@ -20,7 +20,7 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header" id="top">
+    <header class="site-header">
       <a class="wordmark" href="#top" aria-label="RIKU, back to top">
         <span class="wordmark-star" aria-hidden="true">✳</span>
         <span>RIKU<span class="wordmark-dot">.</span></span>
@@ -41,7 +41,7 @@
     </nav>
 
     <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-left">
           <div class="hero-kicker"><span class="status-dot"></span> VISION-LED RESEARCH COLLECTIVE <span class="hero-kicker-index">01 / ∞</span></div>
           <div class="hero-copy">
@@ -100,44 +100,30 @@
             <span class="featured-project-kicker">A REAL-WORLD VISION EXPERIMENT</span>
             <h3>Surface<span>Trace.</span></h3>
             <p class="featured-project-tagline">See where to look.</p>
-            <p class="featured-project-description">A metal surface inspection demo that compares real photos with a normal reference and highlights areas worth reviewing.</p>
+            <p class="featured-project-description">A metal surface inspection demo that compares real photos with a normal reference and highlights areas worth reviewing. Follow the six-step method on the screen.</p>
             <div class="featured-project-tags"><span>VISUAL INSPECTION</span><span>ANOMALY DETECTION</span><span>LIVE DEMO</span></div>
             <a class="featured-project-link" href="https://gohyunsu.github.io/surface-trace/" target="_blank" rel="noopener noreferrer">EXPLORE SURFACETRACE <span aria-hidden="true">↗</span></a>
           </div>
           <div class="featured-project-art">
-            <figure class="surface-photo-frame">
-              <div class="surface-photo-meta" aria-hidden="true"><span>FIELD NOTE / 001</span><span>REAL TEST PHOTO ✳</span></div>
-              <img src="./assets/surface-trace/sample-01.jpg" alt="Actual KolektorSDD metal surface test photo showing a dark crack across the textured material" loading="lazy" width="500" height="1250" />
-              <figcaption><span>KOLEKTORSDD / METAL SURFACE</span><span>LOOK CLOSER ↗</span></figcaption>
-            </figure>
-            <span class="surface-photo-sticker" aria-hidden="true">REAL<br />DATA ✦</span>
+            <div class="method-console" id="method-title" data-method-book aria-label="SurfaceTrace method animation">
+              <div class="method-console-top"><span aria-hidden="true">✳</span><span>RIKU / TRACE-01</span><span class="method-console-live"><i aria-hidden="true"></i> AUTO DEMO</span></div>
+              <div class="method-console-screen">
+                <div class="method-screen-page" data-method-page>
+                  <div class="method-screen-header"><span>THE METHOD / SURFACETRACE</span><span data-method-count>01 / 06</span></div>
+                  <img data-method-image src="./assets/surface-trace/01-poster.png" alt="Normal metal surface photos becoming a reference bank of visual patches" width="720" height="420" loading="lazy" />
+                  <div class="method-screen-caption"><span data-method-step>STEP 01</span><strong data-method-heading>Build the reference</strong></div>
+                </div>
+              </div>
+              <div class="method-console-progress" aria-hidden="true"><span data-method-progress></span></div>
+              <div class="method-console-controls">
+                <button type="button" class="method-arrow" data-method-prev aria-label="Previous SurfaceTrace step">←</button>
+                <p data-method-description>Normal photos form a reference bank.</p>
+                <button type="button" class="method-arrow" data-method-next aria-label="Next SurfaceTrace step">→</button>
+              </div>
+            </div>
           </div>
         </article>
-        <section class="method-story" aria-labelledby="method-title">
-          <div class="method-story-heading"><div><span class="eyebrow">SURFACETRACE / HOW IT WORKS</span><h3 id="method-title">One frame<br /><em>at a time.</em></h3></div><p>Flip through six short animations made from real surface photos and model intermediates. From a normal reference to a highlighted area worth reviewing.</p></div>
-          <div class="method-book" data-method-book>
-            <span class="method-book-spine" aria-hidden="true">RIKU / FIELD NOTES · 001</span>
-            <div class="method-book-page" data-method-page>
-              <div class="method-book-header"><span>THE METHOD / SURFACETRACE</span><span data-method-count>01 / 06</span></div>
-              <img data-method-image src="./assets/surface-trace/01-poster.png" alt="Normal metal surface photos becoming a reference bank of visual patches" width="720" height="420" loading="lazy" />
-              <div class="method-book-caption"><span data-method-step>STEP 01</span><div><h4 data-method-heading>Build the reference</h4><p data-method-description>Normal photos become feature maps; sampled patches form the reference.</p></div></div>
-            </div>
-            <div class="method-book-controls">
-              <button type="button" class="method-arrow" data-method-prev aria-label="Previous SurfaceTrace step">←</button>
-              <div class="method-book-progress" role="group" aria-label="SurfaceTrace method steps">
-                <button type="button" data-method-jump="0" aria-label="Show step 1: Build the reference" aria-current="step">01</button>
-                <button type="button" data-method-jump="1" aria-label="Show step 2: Prepare the photo">02</button>
-                <button type="button" data-method-jump="2" aria-label="Show step 3: Split into patches">03</button>
-                <button type="button" data-method-jump="3" aria-label="Show step 4: Measure features">04</button>
-                <button type="button" data-method-jump="4" aria-label="Show step 5: Find the nearest normal patch">05</button>
-                <button type="button" data-method-jump="5" aria-label="Show step 6: Map anomalies">06</button>
-              </div>
-              <button type="button" class="method-arrow" data-method-next aria-label="Next SurfaceTrace step">→</button>
-              <button type="button" class="method-play" data-method-play aria-label="Pause SurfaceTrace animation" aria-pressed="false">PAUSE <span aria-hidden="true">Ⅱ</span></button>
-            </div>
-          </div>
-          <p class="surface-credit">IMAGERY CREDIT / Metal surface photo from <a href="https://www.vicos.si/resources/kolektorsdd/" target="_blank" rel="noopener noreferrer">KolektorSDD · ViCoS Lab / Kolektor Group</a>; the GIFs are SurfaceTrace visualizations derived from that data. The photo is cropped in this layout. See <a href="https://doi.org/10.1007/s10845-019-01476-x" target="_blank" rel="noopener noreferrer">Tabernik et al. (2019)</a>. Dataset-derived media: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>.</p>
-        </section>
+        <p class="surface-credit">IMAGERY CREDIT / SurfaceTrace animations derived from <a href="https://www.vicos.si/resources/kolektorsdd/" target="_blank" rel="noopener noreferrer">KolektorSDD · ViCoS Lab / Kolektor Group</a> photos and model intermediates. See <a href="https://doi.org/10.1007/s10845-019-01476-x" target="_blank" rel="noopener noreferrer">Tabernik et al. (2019)</a>. Dataset-derived media: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a>.</p>
         <div class="project-questions-label"><span>QUESTIONS BEHIND THE WORK</span><span>001—003 / KEEP EXPLORING ✦</span></div>
         <div class="project-board">
           <article class="project-card project-lime"><div class="project-card-meta"><span>QUESTION 001</span><span class="asterisk">✳</span></div><h3>How do machines<br />really <i>see?</i></h3><p>What do visual representations capture—and what do they miss?</p><span class="project-state">EXPLORATION NOTE <b>↗</b></span></article>
@@ -151,10 +137,10 @@
         <div class="section-topline"><span>04 / THE PEOPLE</span><span>BETTER TOGETHER ♡</span></div>
         <div class="people-heading"><span class="eyebrow">FOUR MINDS, MANY DIRECTIONS</span><h2 id="people-title">Meet the team<span class="pink-dot">.</span></h2><p>Different perspectives help us see further.</p></div>
         <div class="people-list">
-          <article class="person"><div class="person-num">01</div><div class="person-avatar person-avatar-photo"><img src="./assets/hyunsu-profile.png" alt="Smiling tan dog used as Hyunsu Go's profile photo" loading="lazy" /><span>✳</span></div><div class="person-info"><h3><a href="https://gohyunsu.github.io/" target="_blank" rel="noopener noreferrer">Hyunsu Go</a></h3><div class="person-details"><span class="person-position">TEAM LEAD</span><a class="person-affiliation" href="https://en.snu.ac.kr/" target="_blank" rel="noopener noreferrer">Seoul National University ↗</a></div></div><a class="person-profile-arrow" href="https://gohyunsu.github.io/" target="_blank" rel="noopener noreferrer" aria-label="Hyunsu Go's website">↗</a></article>
-          <article class="person"><div class="person-num">02</div><div class="person-avatar">DK<span>✦</span></div><div class="person-info"><h3>Dohyeon Kwon</h3><div class="person-details"><span class="person-position">TEAM MEMBER</span><a class="person-affiliation" href="https://www.khu.ac.kr/eng/user/main/view.do" target="_blank" rel="noopener noreferrer">Kyung Hee University ↗</a></div></div><span class="person-profile-arrow" aria-hidden="true">✦</span></article>
-          <article class="person"><div class="person-num">03</div><div class="person-avatar">JJ<span>♡</span></div><div class="person-info"><h3><a href="https://junjinyong.github.io/" target="_blank" rel="noopener noreferrer">Jinyong Jun</a></h3><div class="person-details"><span class="person-position">TEAM MEMBER</span><a class="person-affiliation" href="https://en.snu.ac.kr/" target="_blank" rel="noopener noreferrer">Seoul National University ↗</a></div></div><a class="person-profile-arrow" href="https://junjinyong.github.io/" target="_blank" rel="noopener noreferrer" aria-label="Jinyong Jun's website">↗</a></article>
-          <article class="person"><div class="person-num">04</div><div class="person-avatar">JL<span>✿</span></div><div class="person-info"><h3>Jihyeon Lee</h3><div class="person-details"><span class="person-position">TEAM MEMBER</span><a class="person-affiliation" href="https://neweng.cau.ac.kr/" target="_blank" rel="noopener noreferrer">Chung-Ang University ↗</a></div></div><span class="person-profile-arrow" aria-hidden="true">✿</span></article>
+          <article class="person"><div class="person-num">01</div><div class="person-avatar person-avatar-photo"><span class="avatar-initials">HG</span><img src="./assets/hyunsu-profile.png" alt="" loading="lazy" /><span class="avatar-sticker" aria-hidden="true">✳</span></div><div class="person-info"><h3><a href="https://gohyunsu.github.io/" target="_blank" rel="noopener noreferrer">Hyunsu Go</a></h3><div class="person-details"><span class="person-position">TEAM LEAD</span><a class="person-affiliation" href="https://en.snu.ac.kr/" target="_blank" rel="noopener noreferrer">Seoul National University ↗</a></div></div><a class="person-profile-arrow" href="https://gohyunsu.github.io/" target="_blank" rel="noopener noreferrer" aria-label="Hyunsu Go's website">↗</a></article>
+          <article class="person"><div class="person-num">02</div><div class="person-avatar">DK<span class="avatar-sticker" aria-hidden="true">✦</span></div><div class="person-info"><h3>Dohyeon Kwon</h3><div class="person-details"><span class="person-position">TEAM MEMBER</span><a class="person-affiliation" href="https://www.khu.ac.kr/eng/user/main/view.do" target="_blank" rel="noopener noreferrer">Kyung Hee University ↗</a></div></div><span class="person-profile-arrow" aria-hidden="true">✦</span></article>
+          <article class="person"><div class="person-num">03</div><div class="person-avatar">JJ<span class="avatar-sticker" aria-hidden="true">♡</span></div><div class="person-info"><h3><a href="https://junjinyong.github.io/" target="_blank" rel="noopener noreferrer">Jinyong Jun</a></h3><div class="person-details"><span class="person-position">TEAM MEMBER</span><a class="person-affiliation" href="https://en.snu.ac.kr/" target="_blank" rel="noopener noreferrer">Seoul National University ↗</a></div></div><a class="person-profile-arrow" href="https://junjinyong.github.io/" target="_blank" rel="noopener noreferrer" aria-label="Jinyong Jun's website">↗</a></article>
+          <article class="person"><div class="person-num">04</div><div class="person-avatar">JL<span class="avatar-sticker" aria-hidden="true">✿</span></div><div class="person-info"><h3>Jihyeon Lee</h3><div class="person-details"><span class="person-position">TEAM MEMBER</span><a class="person-affiliation" href="https://neweng.cau.ac.kr/" target="_blank" rel="noopener noreferrer">Chung-Ang University ↗</a></div></div><span class="person-profile-arrow" aria-hidden="true">✿</span></article>
         </div>
       </section>
 
@@ -191,7 +177,7 @@
             <p>Our name takes inspiration from Maeda Riku of NCT WISH. We carry some of that bright, playful energy into how we work: finding good questions and shaping answers together.</p>
             <p>Our wish is to keep our perspective moving. When ideas from different fields meet, they can open possibilities none of us expected.</p>
             <figure class="motto-card">
-              <figcaption><span>✳ OUR MOTTO</span><span>FROM RIKU'S PART / NCT WISH ↗</span></figcaption>
+              <figcaption><span>✳ OUR MOTTO</span><span>"NASA" / NCT WISH · RIKU'S PART ↗</span></figcaption>
               <blockquote lang="ko">피하지 못한다면은 즐겨 <span lang="en">face it</span></blockquote>
               <p class="motto-translation">If we can't avoid it, enjoy it. Face it.</p>
               <p class="motto-meaning">A reminder to meet difficult questions with curiosity and energy.</p>

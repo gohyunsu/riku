@@ -44,12 +44,12 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
 const methodBook = document.querySelector('[data-method-book]');
 if (methodBook) {
   const steps = [
-    ['Build the reference', 'Normal photos become feature maps; sampled patches form the reference.', 'Normal metal surface photos becoming a reference bank of visual patches'],
-    ['Prepare the photo', 'Resize, convert to grayscale, and normalize brightness.', 'A real metal surface photo before and after preparation'],
-    ['Split into patches', 'Examine small areas across the surface.', 'A metal surface photo divided into small patches'],
-    ['Measure features', 'Capture brightness, dark gaps, and edges.', 'Visual features measured from a surface patch'],
-    ['Find the nearest normal patch', 'Score each patch by its closest normal match.', 'Surface patches compared with a normal reference'],
-    ['Map anomalies', 'Map patch scores and flag photos above the threshold.', 'Anomaly highlights over a real metal surface photo']
+    ['Build the reference', 'Normal photos form a reference bank.', 'Normal metal surface photos becoming a reference bank of visual patches', 2480],
+    ['Prepare the photo', 'Resize and normalize the test photo.', 'A real metal surface photo before and after preparation', 2520],
+    ['Split into patches', 'Examine small areas across the surface.', 'A metal surface photo divided into small patches', 2500],
+    ['Measure features', 'Capture brightness, dark gaps, and edges.', 'Visual features measured from a surface patch', 2580],
+    ['Find the nearest normal patch', 'Compare each patch with the reference.', 'Surface patches compared with a normal reference', 2570],
+    ['Map anomalies', 'Highlight the areas worth reviewing.', 'Anomaly highlights over a real metal surface photo', 2490]
   ];
   const assetRoot = './assets/surface-trace/';
   const page = methodBook.querySelector('[data-method-page]');
@@ -58,19 +58,18 @@ if (methodBook) {
   const stepLabel = methodBook.querySelector('[data-method-step]');
   const heading = methodBook.querySelector('[data-method-heading]');
   const description = methodBook.querySelector('[data-method-description]');
-  const playButton = methodBook.querySelector('[data-method-play]');
-  const jumpButtons = [...methodBook.querySelectorAll('[data-method-jump]')];
+  const progress = methodBook.querySelector('[data-method-progress]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let current = 0;
   let visible = false;
-  let paused = false;
   let turning = false;
   let pendingIndex = null;
+  let runToken = 0;
   let timer;
 
   const asset = (index, extension) => `${assetRoot}${String(index + 1).padStart(2, '0')}${extension}`;
 
-  function showStep(index) {
+  function renderStep(index) {
     current = index;
     const number = String(index + 1).padStart(2, '0');
     count.textContent = `${number} / 06`;
@@ -79,24 +78,45 @@ if (methodBook) {
     description.textContent = steps[index][1];
     image.alt = steps[index][2];
     image.src = asset(index, '-poster.png');
-    if (visible && !paused && !reducedMotion.matches) {
-      requestAnimationFrame(() => {
-        if (current === index && visible && !paused) image.src = asset(index, '.gif');
-      });
-    }
-    jumpButtons.forEach((button, buttonIndex) => {
-      if (buttonIndex === index) button.setAttribute('aria-current', 'step');
-      else button.removeAttribute('aria-current');
-    });
   }
 
-  function scheduleNext() {
+  function stopPlayback() {
     clearTimeout(timer);
-    if (visible && !paused && !reducedMotion.matches && !document.hidden) {
-      timer = setTimeout(() => {
-        turnTo((current + 1) % steps.length);
-      }, 3600);
-    }
+    runToken += 1;
+    image.onload = null;
+    image.onerror = null;
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+  }
+
+  function startPlayback() {
+    stopPlayback();
+    image.src = asset(current, '-poster.png');
+    if (!visible || document.hidden || reducedMotion.matches || turning) return;
+
+    const token = runToken;
+    const index = current;
+    const duration = steps[index][3] * 2;
+    requestAnimationFrame(() => {
+      if (token !== runToken || !visible || document.hidden) return;
+      image.onload = () => {
+        if (token !== runToken || !image.currentSrc.endsWith('.gif')) return;
+        image.onload = null;
+        requestAnimationFrame(() => {
+          if (token !== runToken) return;
+          progress.style.transition = `width ${duration}ms linear`;
+          progress.style.width = '100%';
+          timer = setTimeout(() => turnTo((current + 1) % steps.length), duration);
+        });
+      };
+      image.onerror = () => {
+        if (token !== runToken) return;
+        image.onerror = null;
+        image.src = asset(index, '-poster.png');
+        timer = setTimeout(() => turnTo((current + 1) % steps.length), duration);
+      };
+      image.src = asset(index, '.gif');
+    });
   }
 
   function turnTo(index) {
@@ -105,68 +125,55 @@ if (methodBook) {
       return;
     }
     if (index === current) return;
-    clearTimeout(timer);
+    stopPlayback();
     if (reducedMotion.matches) {
-      showStep(index);
+      renderStep(index);
       return;
     }
     turning = true;
-    page.classList.add('is-turning-out');
+    page.classList.add('is-switching');
     setTimeout(() => {
-      showStep(index);
-      page.classList.remove('is-turning-out');
-      page.classList.add('is-turning-in');
-      void page.offsetWidth;
+      renderStep(index);
       requestAnimationFrame(() => {
-        page.classList.remove('is-turning-in');
+        page.classList.remove('is-switching');
         setTimeout(() => {
           turning = false;
           if (pendingIndex !== null) {
             const nextIndex = pendingIndex;
             pendingIndex = null;
-            turnTo(nextIndex);
-          } else scheduleNext();
-        }, 360);
+            if (nextIndex !== current) turnTo(nextIndex);
+            else startPlayback();
+          } else startPlayback();
+        }, 230);
       });
-    }, 340);
+    }, 180);
   }
 
-  methodBook.querySelector('[data-method-prev]').addEventListener('click', () => turnTo((current - 1 + steps.length) % steps.length));
-  methodBook.querySelector('[data-method-next]').addEventListener('click', () => turnTo((current + 1) % steps.length));
-  jumpButtons.forEach(button => button.addEventListener('click', () => turnTo(Number(button.dataset.methodJump))));
+  function navigate(delta) {
+    const base = turning && pendingIndex !== null ? pendingIndex : current;
+    turnTo((base + delta + steps.length) % steps.length);
+  }
+
+  methodBook.querySelector('[data-method-prev]').addEventListener('click', () => navigate(-1));
+  methodBook.querySelector('[data-method-next]').addEventListener('click', () => navigate(1));
   methodBook.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       event.preventDefault();
-      turnTo((current + (event.key === 'ArrowRight' ? 1 : -1) + steps.length) % steps.length);
+      navigate(event.key === 'ArrowRight' ? 1 : -1);
     }
-  });
-  playButton.addEventListener('click', () => {
-    paused = !paused;
-    playButton.setAttribute('aria-pressed', String(paused));
-    playButton.setAttribute('aria-label', paused ? 'Play SurfaceTrace animation' : 'Pause SurfaceTrace animation');
-    playButton.firstChild.textContent = paused ? 'PLAY ' : 'PAUSE ';
-    playButton.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
-    showStep(current);
-    scheduleNext();
   });
   if ('IntersectionObserver' in window) {
     const bookObserver = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;
-      showStep(current);
-      scheduleNext();
-    }, { threshold: 0.15 });
+      startPlayback();
+    }, { threshold: 0.3 });
     bookObserver.observe(methodBook);
   } else {
     visible = true;
-    showStep(current);
-    scheduleNext();
+    startPlayback();
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) clearTimeout(timer);
-    else scheduleNext();
+    startPlayback();
   });
-  reducedMotion.addEventListener('change', () => {
-    showStep(current);
-    scheduleNext();
-  });
+  reducedMotion.addEventListener('change', startPlayback);
 }
