@@ -89,3 +89,35 @@
 
 @media(max-width:760px){.featured-project{grid-template-columns:1fr;margin-bottom:65px}.featured-project-copy{padding:22px 22px 28px}.featured-project-meta{font-size:.53rem}.featured-project-kicker{margin-top:48px}.featured-project h3{font-size:clamp(3.2rem,13vw,5.2rem)}.featured-project h3 span{display:block}.featured-project-description{font-size:.93rem}.featured-project-art{min-height:440px;padding:25px}.surface-photo-frame{height:390px}.surface-photo-sticker{width:84px;height:84px;font-size:.7rem;right:3%;bottom:6%}.surface-photo-meta,.surface-photo-frame figcaption{font-size:.48rem;padding:10px}.method-story{margin-bottom:70px}.method-story-heading{display:block}.method-story-heading h3{font-size:clamp(3rem,11vw,5rem)}.method-story-heading>p{margin:25px 0 0}.method-book{padding:14px;margin-top:35px}.method-book-spine{display:none}.method-book-caption{grid-template-columns:1fr;gap:5px;min-height:120px;padding:13px 15px}.method-book-caption>span{padding-top:0}.method-book-caption h4{font-size:1.3rem}.method-book-caption p{font-size:.76rem}.method-book-controls{gap:5px;flex-wrap:wrap}.method-arrow{flex-basis:34px;width:34px;height:34px}.method-book-progress{order:2;flex-basis:100%;gap:4px}.method-book-progress button{height:31px;font-size:.53rem}.method-play{height:34px;min-width:78px;margin-left:auto}.surface-credit{font-size:.62rem}.project-questions-label{font-size:.55rem;flex-wrap:wrap}.pub-heading{display:block;padding-top:60px}.pub-heading h2{font-size:clamp(3rem,12vw,6rem)}.pub-heading>p{margin:28px 0 0}.paper-list{margin-top:45px}.paper-card{display:flex;flex-direction:column;gap:14px;padding:20px;min-height:0}.paper-number{flex-direction:row;align-items:center}.paper-number span{font-size:1.4rem}.paper-meta{font-size:.54rem;gap:9px}.paper-card h3{font-size:clamp(1.5rem,6.5vw,2.2rem)}.paper-link{align-self:flex-start;margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.method-book-page,.method-book-page.is-turning-out,.method-book-page.is-turning-in{transition:none;transform:none;opacity:1}}
+
+/* Team profiles and complete publication credits */
+.person{grid-template-columns:7% 105px minmax(0,1fr) 44px}
+.person:nth-child(4) .person-avatar{background:#b4d9ff;color:var(--ink);transform:rotate(7deg)}
+.person-avatar-photo{background:#eadfd3;transform:rotate(-5deg)}
+.person-avatar-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 44%;border-radius:50%}
+.person-info{min-width:0}
+.person-info h3{font:700 clamp(2rem,4.5vw,5rem)/1 var(--display);letter-spacing:-.085em;margin:0}
+.person-info h3 a:hover{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
+.person-details{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;margin-top:12px}
+.person-position{font-size:.67rem;font-weight:800;letter-spacing:.09em}
+.person-affiliation{font-size:.8rem;font-weight:700;text-decoration:underline;text-decoration-color:var(--blue);text-underline-offset:3px}
+.person-affiliation:hover{color:var(--blue)}
+.person-profile-arrow{font-size:1.8rem;text-align:right;font-weight:700}
+a.person-profile-arrow:hover{color:var(--blue);transform:translate(2px,-2px)}
+.pub-key{display:flex;align-items:center;gap:8px;margin:24px 0 -22px;font-size:.72rem;font-weight:700}
+.pub-key-mark{display:inline-block;width:20px;height:7px;border-bottom:3px solid var(--blue)}
+.paper-body{min-width:0}
+.paper-authors{max-width:970px;font-size:.86rem;font-weight:500;line-height:1.7;margin-bottom:13px!important}
+.team-author{font-weight:800;text-decoration:underline;text-decoration-color:var(--blue);text-decoration-thickness:3px;text-underline-offset:3px}
+@media(max-width:1100px){.person{grid-template-columns:6% 85px minmax(0,1fr) 32px}}
+@media(max-width:760px){
+  .person{grid-template-columns:38px 65px minmax(0,1fr) 25px;gap:10px;min-height:130px}
+  .person-info h3{font-size:clamp(1.7rem,6vw,2.7rem)}
+  .person-details{display:block;margin-top:7px}
+  .person-position,.person-affiliation{display:block;font-size:.65rem;line-height:1.45}
+  .person-affiliation{margin-top:3px}
+  .person-profile-arrow{font-size:1.2rem}
+  .pub-key{margin:22px 0 -20px;font-size:.68rem}
+  .paper-authors{font-size:.8rem;line-height:1.7}
+}
+@media(max-width:390px){.person-info h3{font-size:1.5rem}}
