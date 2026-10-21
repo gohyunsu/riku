@@ -122,6 +122,7 @@ if (methodBook) {
   const assetRoot = './assets/surface-trace/';
   const page = methodBook.querySelector('[data-method-page]');
   const image = methodBook.querySelector('[data-method-image]');
+  const motionImage = methodBook.querySelector('[data-method-motion]');
   const count = methodBook.querySelector('[data-method-count]');
   const stepLabel = methodBook.querySelector('[data-method-step]');
   const heading = methodBook.querySelector('[data-method-heading]');
@@ -132,10 +133,35 @@ if (methodBook) {
   let visible = false;
   let turning = false;
   let pendingIndex = null;
+  let targetIndex = 0;
   let runToken = 0;
   let timer;
 
   const asset = (index, extension) => `${assetRoot}${String(index + 1).padStart(2, '0')}${extension}`;
+  const posterReady = steps.map((_, index) => {
+    const poster = new Image();
+    poster.src = asset(index, '-poster.png');
+    return poster.decode().catch(() => {});
+  });
+
+  function waitForPageFade() {
+    if (reducedMotion.matches) return Promise.resolve();
+    return new Promise(resolve => {
+      let finished = false;
+      function finish() {
+        if (finished) return;
+        finished = true;
+        page.removeEventListener('transitionend', onTransitionEnd);
+        clearTimeout(fallback);
+        resolve();
+      }
+      function onTransitionEnd(event) {
+        if (event.target === page && event.propertyName === 'opacity') finish();
+      }
+      page.addEventListener('transitionend', onTransitionEnd);
+      const fallback = setTimeout(finish, 320);
+    });
+  }
 
   function renderStep(index) {
     current = index;
@@ -151,74 +177,88 @@ if (methodBook) {
   function stopPlayback() {
     clearTimeout(timer);
     runToken += 1;
-    image.onload = null;
-    image.onerror = null;
+    motionImage.onload = null;
+    motionImage.onerror = null;
+    motionImage.classList.remove('is-ready');
+    motionImage.removeAttribute('src');
     progress.style.transition = 'none';
     progress.style.width = '0%';
   }
 
   function startPlayback() {
     stopPlayback();
+    if (turning) return;
     image.src = asset(current, '-poster.png');
-    if (!visible || document.hidden || reducedMotion.matches || turning) return;
+    if (!visible || document.hidden || reducedMotion.matches) return;
 
     const token = runToken;
     const index = current;
     const duration = steps[index][3] * 2;
     requestAnimationFrame(() => {
       if (token !== runToken || !visible || document.hidden) return;
-      image.onload = () => {
-        if (token !== runToken || !image.currentSrc.endsWith('.gif')) return;
-        image.onload = null;
+      motionImage.onload = () => {
+        if (token !== runToken || !motionImage.currentSrc.endsWith('.gif')) return;
+        motionImage.onload = null;
+        motionImage.classList.add('is-ready');
         requestAnimationFrame(() => {
           if (token !== runToken) return;
           progress.style.transition = `width ${duration}ms linear`;
           progress.style.width = '100%';
-          timer = setTimeout(() => turnTo((current + 1) % steps.length), duration);
+          timer = setTimeout(() => {
+            if (token === runToken) turnTo((index + 1) % steps.length);
+          }, duration);
         });
       };
-      image.onerror = () => {
+      motionImage.onerror = () => {
         if (token !== runToken) return;
-        image.onerror = null;
-        image.src = asset(index, '-poster.png');
-        timer = setTimeout(() => turnTo((current + 1) % steps.length), duration);
+        motionImage.onerror = null;
+        timer = setTimeout(() => {
+          if (token === runToken) turnTo((index + 1) % steps.length);
+        }, duration);
       };
-      image.src = asset(index, '.gif');
+      motionImage.src = asset(index, '.gif');
     });
   }
 
-  function turnTo(index) {
+  async function turnTo(index) {
     if (turning) {
       pendingIndex = index;
       return;
     }
     if (index === current) return;
+    targetIndex = index;
     stopPlayback();
     if (reducedMotion.matches) {
       renderStep(index);
       return;
     }
     turning = true;
+    const fadeOut = waitForPageFade();
     page.classList.add('is-switching');
-    setTimeout(() => {
-      renderStep(index);
-      requestAnimationFrame(() => {
-        page.classList.remove('is-switching');
-        setTimeout(() => {
-          turning = false;
-          if (pendingIndex !== null) {
-            const nextIndex = pendingIndex;
-            pendingIndex = null;
-            if (nextIndex !== current) turnTo(nextIndex);
-            else startPlayback();
-          } else startPlayback();
-        }, 230);
-      });
-    }, 180);
+    await fadeOut;
+    if (pendingIndex !== null) {
+      index = pendingIndex;
+      pendingIndex = null;
+      targetIndex = index;
+    }
+    await posterReady[index];
+    renderStep(index);
+    await image.decode().catch(() => {});
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    const fadeIn = waitForPageFade();
+    page.classList.remove('is-switching');
+    await fadeIn;
+    turning = false;
+    if (pendingIndex !== null) {
+      const nextIndex = pendingIndex;
+      pendingIndex = null;
+      if (nextIndex !== current) turnTo(nextIndex);
+      else startPlayback();
+    } else startPlayback();
   }
 
   function navigate(delta) {
-    const base = turning && pendingIndex !== null ? pendingIndex : current;
+    const base = turning ? (pendingIndex ?? targetIndex) : current;
     turnTo((base + delta + steps.length) % steps.length);
   }
 
