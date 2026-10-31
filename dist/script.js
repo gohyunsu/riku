@@ -226,7 +226,7 @@ if (pixelQuest) {
   function updateSignalMotion() {
     clearInterval(interval);
     if (visible && !document.hidden && !reducedMotion.matches && score < 3) {
-      interval = setInterval(moveSignal, 2600);
+      interval = setInterval(moveSignal, 1100);
     }
   }
 
