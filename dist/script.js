@@ -109,6 +109,163 @@ if (questionBoard) {
   updateQuestionControls();
 }
 
+const thoughtButton = document.querySelector('[data-thought-next]');
+if (thoughtButton) {
+  const thoughtLine = document.querySelector('[data-thought-line]');
+  const thoughts = [
+    'One image can spark a question.<br />One question can open a new direction.',
+    'Look a little closer.<br />The next idea may already be in the frame.',
+    'Different minds, one view.<br />Then another view entirely.'
+  ];
+  let thoughtIndex = 0;
+  thoughtButton.addEventListener('click', () => {
+    thoughtIndex = (thoughtIndex + 1) % thoughts.length;
+    thoughtLine.innerHTML = thoughts[thoughtIndex];
+  });
+}
+
+const diary = document.querySelector('[data-diary]');
+if (diary) {
+  const photos = [...diary.querySelectorAll('[data-diary-photo]')];
+  const count = diary.querySelector('[data-diary-count]');
+  const progress = diary.querySelector('[data-diary-progress]');
+  const source = document.querySelector('[data-diary-source]');
+  const sources = [
+    'https://x.com/nctwishofficial/status/1910709630155842032',
+    'https://x.com/nctwishofficial/status/1958864606589591888'
+  ];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const duration = 5500;
+  let index = 0;
+  let visible = false;
+  let paused = false;
+  let timer;
+
+  function stopDiaryTimer() {
+    clearTimeout(timer);
+    progress.style.transition = 'none';
+    progress.style.width = '0%';
+  }
+
+  function startDiaryTimer() {
+    stopDiaryTimer();
+    if (!visible || paused || document.hidden || reducedMotion.matches) return;
+    requestAnimationFrame(() => {
+      if (!visible || paused || document.hidden || reducedMotion.matches) return;
+      progress.style.transition = `width ${duration}ms linear`;
+      progress.style.width = '100%';
+      timer = setTimeout(() => showDiaryPhoto(index + 1), duration);
+    });
+  }
+
+  function showDiaryPhoto(nextIndex) {
+    index = (nextIndex + photos.length) % photos.length;
+    photos.forEach((photo, photoIndex) => photo.classList.toggle('is-active', photoIndex === index));
+    count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}`;
+    source.href = sources[index];
+    startDiaryTimer();
+  }
+
+  diary.querySelector('[data-diary-prev]').addEventListener('click', () => showDiaryPhoto(index - 1));
+  diary.querySelector('[data-diary-next]').addEventListener('click', () => showDiaryPhoto(index + 1));
+  diary.addEventListener('mouseenter', () => { paused = true; stopDiaryTimer(); });
+  diary.addEventListener('mouseleave', () => { paused = false; startDiaryTimer(); });
+  diary.addEventListener('focusin', () => { paused = true; stopDiaryTimer(); });
+  diary.addEventListener('focusout', event => {
+    if (diary.contains(event.relatedTarget)) return;
+    paused = false;
+    startDiaryTimer();
+  });
+  document.addEventListener('visibilitychange', startDiaryTimer);
+  reducedMotion.addEventListener('change', startDiaryTimer);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      startDiaryTimer();
+    }, { threshold: 0.25 }).observe(diary);
+  } else {
+    visible = true;
+    startDiaryTimer();
+  }
+}
+
+const heroImage = document.querySelector('.hero-image');
+if (heroImage && window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)').matches) {
+  heroImage.addEventListener('pointermove', event => {
+    const bounds = heroImage.getBoundingClientRect();
+    heroImage.style.setProperty('--hero-x', `${((event.clientX - bounds.left) / bounds.width - .5) * -10}px`);
+    heroImage.style.setProperty('--hero-y', `${((event.clientY - bounds.top) / bounds.height - .5) * -10}px`);
+  });
+  heroImage.addEventListener('pointerleave', () => {
+    heroImage.style.setProperty('--hero-x', '0px');
+    heroImage.style.setProperty('--hero-y', '0px');
+  });
+}
+
+const pixelQuest = document.querySelector('[data-pixel-quest]');
+if (pixelQuest) {
+  const target = pixelQuest.querySelector('[data-pixel-target]');
+  const board = pixelQuest.querySelector('.pixel-board');
+  const scoreLabel = pixelQuest.querySelector('[data-pixel-score]');
+  const status = pixelQuest.querySelector('[data-pixel-status]');
+  const playAgain = pixelQuest.querySelector('[data-pixel-play-again]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const positions = [[2, 2], [6, 1], [4, 3], [1, 1], [7, 2], [3, 1], [5, 3]];
+  const messages = ['ONE SIGNAL FOUND. KEEP LOOKING.', 'TWO SIGNALS FOUND. ONE MORE!', 'NEW PERSPECTIVE UNLOCKED ✦'];
+  let positionIndex = 0;
+  let score = 0;
+  let visible = false;
+  let interval;
+
+  function moveSignal() {
+    positionIndex = (positionIndex + 1) % positions.length;
+    target.style.gridColumn = positions[positionIndex][0];
+    target.style.gridRow = positions[positionIndex][1];
+  }
+
+  function updateSignalMotion() {
+    clearInterval(interval);
+    if (visible && !document.hidden && !reducedMotion.matches && score < 3) {
+      interval = setInterval(moveSignal, 2600);
+    }
+  }
+
+  target.addEventListener('click', () => {
+    if (score === 3) return;
+    score += 1;
+    scoreLabel.textContent = `${String(score).padStart(2, '0')} / 03`;
+    status.textContent = messages[score - 1];
+    if (score === 3) {
+      target.hidden = true;
+      board.classList.add('is-cleared');
+      playAgain.hidden = false;
+    } else moveSignal();
+    updateSignalMotion();
+  });
+  playAgain.addEventListener('click', () => {
+    score = 0;
+    scoreLabel.textContent = '00 / 03';
+    status.textContent = 'READY? FIND THE FIRST STAR.';
+    target.hidden = false;
+    board.classList.remove('is-cleared');
+    playAgain.hidden = true;
+    moveSignal();
+    updateSignalMotion();
+    target.focus();
+  });
+  document.addEventListener('visibilitychange', updateSignalMotion);
+  reducedMotion.addEventListener('change', updateSignalMotion);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      visible = entries[0].isIntersecting;
+      updateSignalMotion();
+    }, { threshold: .3 }).observe(pixelQuest);
+  } else {
+    visible = true;
+    updateSignalMotion();
+  }
+}
+
 const methodBook = document.querySelector('[data-method-book]');
 if (methodBook) {
   const steps = [
