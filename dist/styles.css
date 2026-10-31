@@ -223,6 +223,7 @@ section[id]{scroll-margin-top:82px}
 .diary-card-top{padding:2px 2px 11px}.diary-card-top span:last-child{color:var(--blue);font-size:1.3rem}
 .diary-photos{position:relative;aspect-ratio:4/4.9;overflow:hidden;background:#739dd2;border:1px solid var(--ink)}
 .diary-photos img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 29%;opacity:0;transform:scale(1.04);transition:opacity .55s,transform 6s}
+.diary-photos img:nth-child(3){object-fit:contain;object-position:center;background:#e9ddd7}
 .diary-photos img.is-active{opacity:1;transform:scale(1)}
 .diary-card-bottom{padding:12px 2px 2px}
 .diary-buttons{display:flex;gap:7px}.diary-buttons button{width:34px;height:30px;border:1.5px solid var(--ink);background:var(--paper);cursor:pointer;font-size:1.2rem;line-height:1;transition:background .2s,transform .2s}

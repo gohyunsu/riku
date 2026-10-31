@@ -133,7 +133,7 @@ if (diary) {
   const sources = [
     'https://x.com/nctwishofficial/status/1910709630155842032',
     'https://x.com/nctwishofficial/status/1837145025379193309',
-    'https://x.com/nctwishofficial/status/2038632468199477453'
+    'https://x.com/nctwishofficial/status/2038632468199477453/photo/4'
   ];
   const sourceLabels = ['poppop', 'Steady', 'Ode to Love'];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
