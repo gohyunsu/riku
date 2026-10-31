@@ -229,11 +229,11 @@ section[id]{scroll-margin-top:82px}
 .diary-buttons button:hover,.diary-buttons button:focus-visible{background:var(--lime);transform:translateY(-2px)}
 .diary-progress{height:3px;margin-top:10px;background:rgba(23,23,23,.18);overflow:hidden}.diary-progress span{display:block;width:0;height:100%;background:var(--ink)}
 .diary-source{display:inline-block;margin:20px 0 0 3px;font-size:.61rem;font-weight:800;letter-spacing:.08em;border-bottom:1px solid var(--ink)}.diary-source:hover{color:var(--blue);border-color:var(--blue)}
-.story-visual .story-sticker{position:absolute;right:2%;bottom:0;width:145px;height:145px;margin:0;font-size:1.1rem;box-shadow:6px 6px 0 var(--pink);transform:rotate(10deg);pointer-events:none}.story-visual .story-sticker span{font-size:2.4rem}
+.story-label{position:absolute;right:1%;bottom:38px;min-width:150px;padding:11px 13px 13px;background:var(--lime);border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--pink);transform:rotate(7deg);pointer-events:none;display:grid;gap:5px}.story-label span{font:800 .56rem/1 var(--display);letter-spacing:.11em;color:var(--blue)}.story-label strong{font:700 1.3rem/.96 var(--display);letter-spacing:-.06em}
 @media(pointer:fine) and (prefers-reduced-motion:no-preference){.hero-image img{transform:scale(1.055) translate3d(var(--hero-x,0px),var(--hero-y,0px),0);transition:transform .3s ease-out}}
 @media(max-width:760px){
   .intro-side{height:170px}.intro-photo{top:-17px;right:10%;width:125px}
-  .story-visual{width:min(100%,410px);padding-bottom:60px;margin-bottom:20px}.diary-card{width:78%}.story-visual .story-sticker{width:110px;height:110px;font-size:.82rem;right:1%;bottom:18px}.story-visual .story-sticker span{font-size:1.6rem}
+  .story-visual{width:min(100%,410px);padding-bottom:60px;margin-bottom:20px}.diary-card{width:78%}.story-label{min-width:122px;right:0;bottom:38px;padding:9px 10px;box-shadow:4px 4px 0 var(--pink)}.story-label strong{font-size:1.05rem}
 }
 @media(prefers-reduced-motion:reduce){.intro-photo,.thought-next,.diary-card,.diary-photos img,.diary-buttons button{transition:none}.diary-photos img{transform:none}}
 
@@ -251,8 +251,16 @@ section[id]{scroll-margin-top:82px}
 @media(prefers-reduced-motion:reduce){.pixel-target,.pixel-play-again{transition:none}}
 
 /* Candy-color bubbles carry the pop energy into the team chapter. */
-.people-heading{position:relative;isolation:isolate}.people-heading:after{content:"";position:absolute;right:5%;top:64px;width:180px;height:145px;pointer-events:none;z-index:-1;background:radial-gradient(circle at 25% 32%,var(--pink) 0 17px,transparent 18px),radial-gradient(circle at 68% 25%,var(--blue) 0 25px,transparent 26px),radial-gradient(circle at 52% 77%,var(--lime) 0 33px,transparent 34px),radial-gradient(circle at 91% 78%,var(--pink) 0 12px,transparent 13px);filter:drop-shadow(3px 4px 0 var(--ink))}
+.people-heading{position:relative;isolation:isolate}.people-bubbles{position:absolute;right:5%;top:64px;width:180px;height:145px;pointer-events:none;z-index:-1}.people-bubbles i{position:absolute;display:block;border-radius:50%;box-shadow:3px 4px 0 var(--ink)}.people-bubbles i:nth-child(1){left:28px;top:16px;width:34px;height:34px;background:var(--pink)}.people-bubbles i:nth-child(2){left:96px;top:6px;width:50px;height:50px;background:var(--blue)}.people-bubbles i:nth-child(3){left:70px;top:71px;width:66px;height:66px;background:var(--lime)}.people-bubbles i:nth-child(4){right:8px;bottom:27px;width:24px;height:24px;background:var(--pink)}
 .ticker-pink{background:var(--pink);color:var(--ink)}.ticker-pink .ticker-inner{animation-direction:reverse;animation-duration:28s}.ticker-pink .ticker-inner span{color:var(--blue)}
-@media(prefers-reduced-motion:no-preference){.people-heading:after{animation:bubbleDrift 5s ease-in-out infinite alternate}}
-@keyframes bubbleDrift{to{transform:translateY(-14px) rotate(5deg)}}
-@media(max-width:760px){.people-heading:after{right:0;top:48px;width:180px;height:145px;opacity:.65;transform:scale(.55);transform-origin:top right;animation:none}.ticker-pink{height:42px}}
+@media(prefers-reduced-motion:no-preference){.people-bubbles i:nth-child(1){animation:bubbleA 4.3s ease-in-out infinite alternate}.people-bubbles i:nth-child(2){animation:bubbleB 5.7s ease-in-out infinite alternate}.people-bubbles i:nth-child(3){animation:bubbleC 6.4s ease-in-out infinite alternate}.people-bubbles i:nth-child(4){animation:bubbleD 3.8s ease-in-out infinite alternate}}
+@keyframes bubbleA{to{transform:translate(-5px,-12px)}}@keyframes bubbleB{to{transform:translate(8px,6px)}}@keyframes bubbleC{to{transform:translate(-7px,9px)}}@keyframes bubbleD{to{transform:translate(5px,-9px)}}
+@media(max-width:760px){.people-bubbles{right:0;top:48px;opacity:.65;transform:scale(.55);transform-origin:top right}.ticker-pink{height:42px}}
+
+/* The collage becomes a small I SPY-style observation window. */
+.visual-break-lens{position:absolute;inset:0;z-index:1;pointer-events:none;background:#afcbe6 url('./assets/wish-star-collage.webp') center 49%/cover no-repeat;filter:saturate(1.25) contrast(1.08) brightness(1.12);clip-path:circle(0 at var(--lens-x,66%) var(--lens-y,48%));transition:clip-path .38s ease-out}
+.visual-break.is-looking .visual-break-lens{clip-path:circle(165px at var(--lens-x,66%) var(--lens-y,48%))}
+.visual-break-lens-ring{position:absolute;z-index:1;left:var(--lens-x,66%);top:var(--lens-y,48%);width:330px;height:330px;border:3px solid var(--lime);border-radius:50%;box-shadow:0 0 0 7px rgba(255,255,255,.3),0 0 24px rgba(0,0,0,.4);pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.88);transition:opacity .25s,transform .38s,left .08s,top .08s}.visual-break.is-looking .visual-break-lens-ring{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.visual-break-sticker{cursor:pointer;transition:transform .3s,box-shadow .3s}.visual-break-sticker:hover,.visual-break-sticker:focus-visible{transform:rotate(4deg) scale(1.05);box-shadow:10px 10px 0 var(--pink)}.visual-break-sticker[aria-pressed="true"]{background:var(--pink);box-shadow:7px 7px 0 var(--lime)}
+@media(max-width:760px){.visual-break.is-looking .visual-break-lens{clip-path:circle(105px at var(--lens-x,66%) var(--lens-y,48%))}.visual-break-lens-ring{width:210px;height:210px}}
+@media(prefers-reduced-motion:reduce){.visual-break-lens,.visual-break-lens-ring,.visual-break-sticker{transition:none}}

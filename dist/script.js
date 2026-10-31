@@ -132,8 +132,10 @@ if (diary) {
   const source = document.querySelector('[data-diary-source]');
   const sources = [
     'https://x.com/nctwishofficial/status/1910709630155842032',
-    'https://x.com/nctwishofficial/status/1958864606589591888'
+    'https://x.com/nctwishofficial/status/1837145025379193309',
+    'https://x.com/nctwishofficial/status/2038632468199477453'
   ];
+  const sourceLabels = ['poppop', 'Steady', 'Ode to Love'];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const duration = 5500;
   let index = 0;
@@ -163,6 +165,7 @@ if (diary) {
     photos.forEach((photo, photoIndex) => photo.classList.toggle('is-active', photoIndex === index));
     count.textContent = `${String(index + 1).padStart(2, '0')} / ${String(photos.length).padStart(2, '0')}`;
     source.href = sources[index];
+    source.textContent = `${sourceLabels[index]} / NCT WISH OFFICIAL ↗`;
     startDiaryTimer();
   }
 
@@ -200,6 +203,30 @@ if (heroImage && window.matchMedia('(pointer: fine) and (prefers-reduced-motion:
     heroImage.style.setProperty('--hero-x', '0px');
     heroImage.style.setProperty('--hero-y', '0px');
   });
+}
+
+const visualBreak = document.querySelector('.visual-break');
+if (visualBreak) {
+  const lookButton = visualBreak.querySelector('[data-look-again]');
+  const pointerFine = window.matchMedia('(pointer: fine)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const centerLens = () => {
+    visualBreak.style.setProperty('--lens-x', '66%');
+    visualBreak.style.setProperty('--lens-y', '48%');
+  };
+  lookButton.addEventListener('click', () => {
+    const looking = visualBreak.classList.toggle('is-looking');
+    lookButton.setAttribute('aria-pressed', String(looking));
+    lookButton.setAttribute('aria-label', looking ? 'Hide the closer look at the star collage' : 'Reveal a closer look at the star collage');
+    centerLens();
+  });
+  visualBreak.addEventListener('pointermove', event => {
+    if (!visualBreak.classList.contains('is-looking') || !pointerFine.matches || reducedMotion.matches) return;
+    const bounds = visualBreak.getBoundingClientRect();
+    visualBreak.style.setProperty('--lens-x', `${event.clientX - bounds.left}px`);
+    visualBreak.style.setProperty('--lens-y', `${event.clientY - bounds.top}px`);
+  });
+  visualBreak.addEventListener('pointerleave', centerLens);
 }
 
 const pixelQuest = document.querySelector('[data-pixel-quest]');
