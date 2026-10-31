@@ -4,7 +4,7 @@
 
 The site is a buildless static project in `dist/`. Open `dist/index.html` through a local HTTP server to preview it. Content and layout live in `dist/index.html` and `dist/styles.css`; interactions live in `dist/script.js`.
 
-The interface tracks the current section in the navigation, shows reading progress in the header, and lets small-screen visitors swipe or use arrows to browse the three research questions. The About prompt cycles through short thoughts, the Research section has a three-star pixel quest inspired by NCT WISH's COLOR-era game promotion, the star collage has an interactive observation lens, and the Story photo diary advances automatically or by arrows. The mobile menu supports Escape, and motion effects respect reduced-motion settings.
+The interface tracks the current section in the navigation, shows reading progress in the header, and lets small-screen visitors swipe or use arrows to browse the three research questions. The About prompt cycles through short thoughts, the Research section has a three-star pixel quest inspired by NCT WISH's COLOR-era game promotion whose target speeds up after each catch, the star collage has an interactive observation lens, and the Story photo diary advances automatically or by arrows. The mobile menu supports Escape, and motion effects respect reduced-motion settings.
 
 ## Content status
 

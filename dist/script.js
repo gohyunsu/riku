@@ -238,7 +238,8 @@ if (pixelQuest) {
   const playAgain = pixelQuest.querySelector('[data-pixel-play-again]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const positions = [[2, 2], [6, 1], [4, 3], [1, 1], [7, 2], [3, 1], [5, 3]];
-  const messages = ['ONE SIGNAL FOUND. KEEP LOOKING.', 'TWO SIGNALS FOUND. ONE MORE!', 'NEW PERSPECTIVE UNLOCKED ✦'];
+  const moveIntervals = [780, 560, 400];
+  const messages = ['ONE SIGNAL FOUND. SPEEDING UP!', 'TWO SIGNALS FOUND. EVEN FASTER!', 'NEW PERSPECTIVE UNLOCKED ✦'];
   let positionIndex = 0;
   let score = 0;
   let visible = false;
@@ -253,7 +254,7 @@ if (pixelQuest) {
   function updateSignalMotion() {
     clearInterval(interval);
     if (visible && !document.hidden && !reducedMotion.matches && score < 3) {
-      interval = setInterval(moveSignal, 1100);
+      interval = setInterval(moveSignal, moveIntervals[score]);
     }
   }
 
