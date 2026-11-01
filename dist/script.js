@@ -237,18 +237,21 @@ if (pixelQuest) {
   const status = pixelQuest.querySelector('[data-pixel-status]');
   const playAgain = pixelQuest.querySelector('[data-pixel-play-again]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const positions = [[2, 2], [6, 1], [4, 3], [1, 1], [7, 2], [3, 1], [5, 3]];
+  const columns = 7;
+  const rows = 3;
   const moveIntervals = [780, 560, 400];
   const messages = ['ONE SIGNAL FOUND. SPEEDING UP!', 'TWO SIGNALS FOUND. EVEN FASTER!', 'NEW PERSPECTIVE UNLOCKED ✦'];
-  let positionIndex = 0;
+  let positionIndex = -1;
   let score = 0;
   let visible = false;
   let interval;
 
   function moveSignal() {
-    positionIndex = (positionIndex + 1) % positions.length;
-    target.style.gridColumn = positions[positionIndex][0];
-    target.style.gridRow = positions[positionIndex][1];
+    // Include every cell on the first draw, then exclude the current cell.
+    const next = Math.floor(Math.random() * (columns * rows - (positionIndex < 0 ? 0 : 1)));
+    positionIndex = positionIndex >= 0 && next >= positionIndex ? next + 1 : next;
+    target.style.gridColumn = (positionIndex % columns) + 1;
+    target.style.gridRow = Math.floor(positionIndex / columns) + 1;
   }
 
   function updateSignalMotion() {
@@ -283,6 +286,7 @@ if (pixelQuest) {
   });
   document.addEventListener('visibilitychange', updateSignalMotion);
   reducedMotion.addEventListener('change', updateSignalMotion);
+  moveSignal();
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;
